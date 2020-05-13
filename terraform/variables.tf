@@ -58,6 +58,11 @@ variable "random_element" {
   description = "random element introduced to ensure uniqueness"
 }
 
+variable "vpc_host_project" {
+  type        = string
+  description = "random element introduced to ensure uniqueness"
+}
+
 variable "environments" {
   description = "Create projects for these environments"
   type        = list(string)

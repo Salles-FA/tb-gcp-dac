@@ -12,7 +12,6 @@ module "solution_folder" {
 
 module "workspace_project" {
   source = "./workspace_project"
-  project_name = "${var.solution_name}-workspace"
   region = var.region
   region_zone = var.region_zone
   folder_id = module.solution_folder.solution_id
@@ -21,6 +20,9 @@ module "workspace_project" {
   cost_centre = var.cost_centre
   random_element = var.random_element
   billing_account = var.billing_account
+  vpc_host_project = var.vpc_host_project
+  solution_name = var.solution_name
+
 }
 
 module "environment_projects" {
@@ -35,4 +37,6 @@ module "environment_projects" {
   random_element = var.random_element
   billing_account = var.billing_account
   environments = var.environments
+  vpc_host_project = var.vpc_host_project
+  solution_name = var.solution_name
 }

@@ -18,7 +18,7 @@
 
 resource "google_project" "environment_project" {
   count = length(var.environments)
-  name = var.project_name
+  name = "${var.solution_name}-${var.environments[count.index]}"
   project_id = "${var.environments[count.index]}-${var.random_element}-${var.tb_discriminator}"
   folder_id = var.folder_id
   billing_account = var.billing_account
@@ -28,5 +28,18 @@ resource "google_project" "environment_project" {
     "environment" = var.environments[count.index]
   }
 }
+//
+//# A host project provides network resources to associated service projects.
+//resource "google_compute_shared_vpc_host_project" "host" {
+//  project = var.vpc_host_project
+//}
+//
+//# A service project gains access to network resources provided by its
+//# associated host project.
+//resource "google_compute_shared_vpc_service_project" "service1" {
+//  host_project    = google_compute_shared_vpc_host_project.host.project
+//  service_project = google_project.environment_project.project_id
+//}
+//
 
 

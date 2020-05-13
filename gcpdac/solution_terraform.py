@@ -47,6 +47,7 @@ def run_terraform(solutiondata, terraform_command):
     tf_data['shared_vpc_host_project'] = config['shared_vpc_host_project']
     tf_data['shared_network_name'] = config['shared_network_name']
     tf_data['shared_networking_id'] = config['shared_networking_id']
+    tf_data['vpc_host_project'] = config['vpc_host_project']
     tf_data['root_id'] = config['activator_folder_id']
     tb_discriminator = config['tb_discriminator']
     tf_data['tb_discriminator'] = tb_discriminator

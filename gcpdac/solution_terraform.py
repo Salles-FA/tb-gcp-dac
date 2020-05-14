@@ -47,7 +47,6 @@ def run_terraform(solutiondata, terraform_command):
     tf_data['shared_vpc_host_project'] = config['shared_vpc_host_project']
     tf_data['shared_network_name'] = config['shared_network_name']
     tf_data['shared_networking_id'] = config['shared_networking_id']
-    tf_data['vpc_host_project'] = config['vpc_host_project']
     tf_data['root_id'] = config['activator_folder_id']
     tb_discriminator = config['tb_discriminator']
     tf_data['tb_discriminator'] = tb_discriminator
@@ -67,15 +66,19 @@ def run_terraform(solutiondata, terraform_command):
 
     # TODO create 'modules.tf' file for solution. Will have correct number of environments
     # currently using a 'hard coded' modules.tf file that creates 3 environment projects
+    logger.debug("terraform create tf object")
 
     tf = Terraform(working_dir=terraform_source_path, variables=tf_data)
     terraform_state_bucket = config['terraform_state_bucket']
 
+    logger.debug("terraform init")
     terraform_init(backend_prefix, terraform_state_bucket, tf)
 
     if terraform_command.lower() == 'apply'.lower():
+        logger.debug("terraform apply")
         return terraform_apply(env_data, tf)
     else:
+        logger.debug("terraform destroy")
         return terraform_destroy(env_data, tf)
 
 

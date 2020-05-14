@@ -57,7 +57,7 @@ variable "environments" {
   description = "Create projects for these environments"
 }
 
-variable "vpc_host_project" {
+variable "shared_vpc_host_project" {
   type        = string
   description = "vpc host project"
 }

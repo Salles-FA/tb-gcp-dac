@@ -27,4 +27,14 @@ resource "google_project" "workspace_project" {
   }
 }
 
+resource "google_compute_shared_vpc_host_project" "host" {
+  project = var.shared_vpc_host_project
+}
 
+# A service project gains access to network resources provided by its
+# associated host project.
+resource "google_compute_shared_vpc_service_project" "service" {
+  host_project    = var.shared_vpc_host_project
+  service_project = google_project.workspace_project.project_id
+  depends_on = [google_project.workspace_project]
+}

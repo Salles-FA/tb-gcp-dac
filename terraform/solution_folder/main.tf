@@ -17,9 +17,9 @@
 ###
 
 resource "google_folder" "solution_folder" {
-#  display_name = "${var.solution_name}${var.tb_discriminator == "" ? "" : " - ${var.tb_discriminator}"}"
-  display_name = "${var.solution_name}"
-  parent       = "folders/${var.root_id}"
+  #  display_name = "${var.solution_name}${var.tb_discriminator == "" ? "" : " - ${var.tb_discriminator}"}"
+  display_name = var.solution_name
+  parent = "folders/${var.root_id}"
 
 }
 

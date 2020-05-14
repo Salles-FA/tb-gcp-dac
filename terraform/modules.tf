@@ -38,3 +38,22 @@ module "environment_projects" {
   shared_vpc_host_project = var.shared_vpc_host_project
   solution_name = var.solution_name
 }
+
+module "vpcs" {
+  source = "./vpcs"
+//  project_ids = [module.workspace_project.project_id]
+  shared_vpc_host_project = var.shared_vpc_host_project
+}
+
+
+//module "vpcs_workspace" {
+//  source = "./vpcs"
+//  project_ids = [module.workspace_project.project_id]
+//  shared_vpc_host_project = var.shared_vpc_host_project
+//}
+
+//module "vpcs_envs" {
+//  source = "./vpcs"
+//  project_ids = module.environment_projects.project_ids
+//  shared_vpc_host_project = var.shared_vpc_host_project
+//}

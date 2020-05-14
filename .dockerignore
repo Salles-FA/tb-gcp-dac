@@ -4,3 +4,5 @@
 /createSolution-input-example.json
 /credentials.json
 /.gitignore
+/terraform/input.tfvars
+/terraform/input.auto.tfvars

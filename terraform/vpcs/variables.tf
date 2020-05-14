@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-output "project_number" {
-  description = "Number for the project created"
-  value       = google_project.workspace_project.number
-}
+//variable "project_ids" {
+//  type = list(string)
+//  description = "Project IDs to attach vpc to"
+//}
 
-output "project_id" {
-  description = "Project ID for the project created"
-  value       = google_project.workspace_project.project_id
+variable "shared_vpc_host_project" {
+  type        = string
+  description = "vpc host project"
 }

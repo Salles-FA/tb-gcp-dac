@@ -309,9 +309,9 @@ components:
         activatorGitUrl:
           type: string
           description: git url for the activator repo
-        environments:
+        deployments:
           type: array
-          description: environments
+          description: where to deploy
           items:
             properties:
               environment:

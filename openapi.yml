@@ -219,7 +219,7 @@ paths:
         "201":
           description: Successfully deleted a folder
 servers:
-  - url: /api
+  - url: /dac
 components:
   requestBodies:
     solution.solutionDetails:

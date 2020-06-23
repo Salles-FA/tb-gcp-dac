@@ -1,3 +1,5 @@
+from fcntl import DN_ACCESS
+
 from celery import states
 
 from config import get_celery
@@ -10,7 +12,14 @@ celery_app = get_celery()
 
 logger = get_logger('worker')
 
-@celery_app.task(bind=True)
+
+class DacTask(celery_app.Task):
+
+    def on_failure(self, exc, task_id, args, kwargs, einfo):
+        print('{0!r} failed: {1!r}'.format(task_id, exc))
+
+
+@celery_app.task(bind=True, base=DacTask, name='deploy_solution')
 def deploy_solution_task(self, solutionDetails):
     logger.debug("deploy_solution_task")
     response = create_solution(solutionDetails)
@@ -22,7 +31,7 @@ def deploy_solution_task(self, solutionDetails):
     return response
 
 
-@celery_app.task(bind=True)
+@celery_app.task(bind=True, base=DacTask, name='destroy_solution')
 def destroy_solution_task(self, solutionDetails):
     logger.debug("destroy_solution_task")
     response = delete_solution(solutionDetails)
@@ -33,14 +42,15 @@ def destroy_solution_task(self, solutionDetails):
         self.update_state(state=states.SUCCESS)
     return response
 
-@celery_app.task(bind=True)
+
+@celery_app.task(bind=True, base=DacTask, name='create_folder')
 def create_folder_task(self, folderDetails):
     logger.debug("create_folder_task")
     response = create_folder(folderDetails)
     return response
 
 
-@celery_app.task(bind=True)
+@celery_app.task(bind=True, base=DacTask, name='delete_folder')
 def delete_folder_task(self, folderDetails):
     logger.debug("delete_folder_task")
     response = delete_folder(folderDetails)
@@ -52,7 +62,7 @@ def delete_folder_task(self, folderDetails):
     return response
 
 
-@celery_app.task(bind=True)
+@celery_app.task(bind=True, base=DacTask, name='deploy_activator')
 def deploy_application_task(self, applicationDetails):
     logger.debug("deploy_application_task")
     response = create_application(applicationDetails)
@@ -64,7 +74,7 @@ def deploy_application_task(self, applicationDetails):
     return response
 
 
-@celery_app.task(bind=True)
+@celery_app.task(bind=True, base=DacTask, name='destroy_activator')
 def destroy_application_task(self, applicationDetails):
     logger.debug("destroy_application_task")
     response = delete_application(applicationDetails)
@@ -74,4 +84,3 @@ def destroy_application_task(self, applicationDetails):
     else:
         self.update_state(state=states.SUCCESS)
     return response
-
